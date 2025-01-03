@@ -11,8 +11,7 @@ init_wifi() {
     local board=$(board_name)
     case "$board" in
         jp,tvbox|\
-        panther,x2|\
-        yijiahe,jm10)
+        panther,x2)
             case "$1" in
                 1)
                     sleep 60
