@@ -74,3 +74,51 @@ sed -i "s/wireless.radio\${devidx}.disabled=1/wireless.radio\${devidx}.disabled=
 cp -a $GITHUB_WORKSPACE/configfiles/coremark/* package/base-files/files/bin/
 chmod 755 package/base-files/files/bin/coremark
 chmod 755 package/base-files/files/bin/coremark.sh
+
+
+
+# 加入nsy_g68-plus初始化网络配置脚本
+cp -f $GITHUB_WORKSPACE/configfiles/swconfig_install package/base-files/files/etc/init.d/swconfig_install
+chmod 755 package/base-files/files/etc/init.d/swconfig_install
+
+
+
+# 删除会导致编译失败的补丁
+rm -f target/linux/generic/hack-5.10/747-1-rtl8367b-support-rtl8367s.patch
+rm -f target/linux/generic/hack-5.10/747-2-rtl8366_smi-phy-id.patch
+rm -f target/linux/generic/hack-5.10/744-rtl8366_smi-fix-ce-debugfs.patch
+
+
+
+# 电工大佬的rtl8367b驱动资源包，暂时使用这样替换
+wget https://github.com/xiaomeng9597/files/releases/download/files/rtl8367b.tar.gz
+tar -xvf rtl8367b.tar.gz
+
+
+# openwrt主线rtl8367b驱动资源包，暂时使用这样替换
+# wget https://github.com/xiaomeng9597/files/releases/download/files/rtl8367b-openwrt.tar.gz
+# tar -xvf rtl8367b-openwrt.tar.gz
+
+
+# rm -f target/linux/rockchip/rk35xx/base-files/lib/board/init.sh
+# cp -f $GITHUB_WORKSPACE/configfiles/init.sh target/linux/rockchip/rk35xx/base-files/lib/board/init.sh
+
+rm -f target/linux/rockchip/rk35xx/base-files/etc/board.d/02_network
+cp -f $GITHUB_WORKSPACE/configfiles/02_network target/linux/rockchip/rk35xx/base-files/etc/board.d/02_network
+
+
+
+# 增加bendian_bd-one
+echo -e "\\ndefine Device/bendian_bd-one
+\$(call Device/rk3568)
+  DEVICE_VENDOR := BENDIAN
+  DEVICE_MODEL := BD ONE
+  DEVICE_DTS := rk3568-bendian-bd-one
+  SUPPORTED_DEVICES += bendian,bd-one
+  DEVICE_PACKAGES := kmod-nvme kmod-scsi-core kmod-thermal kmod-switch-rtl8306 kmod-switch-rtl8366-smi kmod-switch-rtl8366rb kmod-switch-rtl8366s kmod-hwmon-pwmfan kmod-leds-pwm kmod-r8125 kmod-r8168 kmod-switch-rtl8367b swconfig kmod-swconfig
+endef
+TARGET_DEVICES += bendian_bd-one" >> target/linux/rockchip/image/rk35xx.mk
+
+
+
+cp -f $GITHUB_WORKSPACE/configfiles/rk3568-bendian-bd-one.dts target/linux/rockchip/dts/rk3568/rk3568-bendian-bd-one.dts
