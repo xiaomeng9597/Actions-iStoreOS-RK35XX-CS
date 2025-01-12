@@ -551,7 +551,7 @@
 			};
 
 			route-hdmi {
-				status = "disabled";
+				status = "okay";
 				logo,uboot = "logo.bmp";
 				logo,kernel = "logo_kernel.bmp";
 				logo,mode = "center";
@@ -2705,7 +2705,7 @@
 		#sound-dai-cells = <0x00>;
 		pinctrl-names = "default";
 		pinctrl-0 = <0xa0 0xa1 0xa2>;
-		status = "disabled";
+		status = "okay";
 		phandle = <0x143>;
 
 		ports {
@@ -5616,7 +5616,7 @@
 		simple-audio-card,format = "i2s";
 		simple-audio-card,mclk-fs = <0x80>;
 		simple-audio-card,name = "rockchip,hdmi";
-		status = "disabled";
+		status = "okay";
 
 		simple-audio-card,cpu {
 			sound-dai = <0x142>;
