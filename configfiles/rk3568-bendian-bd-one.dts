@@ -343,6 +343,10 @@
 		spi1 = "/spi@fe620000";
 		spi2 = "/spi@fe630000";
 		spi3 = "/spi@fe640000";
+		led-boot = "/gpio-leds/led-0";
+		led-failsafe = "/gpio-leds/led-0";
+		led-running = "/gpio-leds/led-0";
+		led-upgrade = "/gpio-leds/led-0";
 	};
 
 	cpus {
@@ -2335,9 +2339,10 @@
 			#address-cells = <0x01>;
 			#size-cells = <0x00>;
 
-			phy@0 {
+			ethernet-phy@0 {
 				compatible = "ethernet-phy-ieee802.3-c22";
 				reg = <0x00>;
+				realtek,led-data = <0x17b>;
 				phandle = <0x86>;
 			};
 		};
@@ -4527,7 +4532,7 @@
 		otg-port {
 			#phy-cells = <0x00>;
 			status = "okay";
-			vbus-supply = <0x12e>;
+			phy-supply = <0x12d>;
 			phandle = <0x26>;
 		};
 	};
@@ -4540,19 +4545,19 @@
 		clock-names = "phyclk";
 		#clock-cells = <0x00>;
 		rockchip,usbgrf = <0x12f>;
-		status = "okay";
+		status = "disabled";
 		phandle = <0x28>;
 
 		host-port {
 			#phy-cells = <0x00>;
-			status = "okay";
+			status = "disabled";
 			phy-supply = <0x12d>;
 			phandle = <0x2a>;
 		};
 
 		otg-port {
 			#phy-cells = <0x00>;
-			status = "okay";
+			status = "disabled";
 			phy-supply = <0x12d>;
 			phandle = <0x29>;
 		};
@@ -4812,28 +4817,28 @@
 
 		gmac1 {
 
-			gmac1m1-miim {
-				rockchip,pins = <0x04 0x0e 0x03 0x131 0x04 0x0f 0x03 0x131>;
+			gmac1m0-miim {
+				rockchip,pins = <0x03 0x14 0x03 0x131 0x03 0x15 0x03 0x131>;
 				phandle = <0x81>;
 			};
 
-			gmac1m1-rx-bus2 {
-				rockchip,pins = <0x04 0x07 0x03 0x131 0x04 0x08 0x03 0x131 0x04 0x09 0x03 0x131>;
+			gmac1m0-rx-bus2 {
+				rockchip,pins = <0x03 0x09 0x03 0x131 0x03 0x0a 0x03 0x131 0x03 0x0b 0x03 0x131>;
 				phandle = <0x83>;
 			};
 
-			gmac1m1-tx-bus2 {
-				rockchip,pins = <0x04 0x04 0x03 0x134 0x04 0x05 0x03 0x134 0x04 0x06 0x03 0x131>;
+			gmac1m0-tx-bus2 {
+				rockchip,pins = <0x03 0x0d 0x03 0x134 0x03 0x0e 0x03 0x134 0x03 0x0f 0x03 0x131>;
 				phandle = <0x82>;
 			};
 
-			gmac1m1-rgmii-clk {
-				rockchip,pins = <0x04 0x03 0x03 0x131 0x04 0x00 0x03 0x135>;
+			gmac1m0-rgmii-clk {
+				rockchip,pins = <0x03 0x07 0x03 0x131 0x03 0x06 0x03 0x135>;
 				phandle = <0x84>;
 			};
 
-			gmac1m1-rgmii-bus {
-				rockchip,pins = <0x04 0x01 0x03 0x131 0x04 0x02 0x03 0x131 0x03 0x1e 0x03 0x134 0x03 0x1f 0x03 0x134>;
+			gmac1m0-rgmii-bus {
+				rockchip,pins = <0x03 0x04 0x03 0x131 0x03 0x05 0x03 0x131 0x03 0x02 0x03 0x134 0x03 0x03 0x03 0x134>;
 				phandle = <0x85>;
 			};
 		};
@@ -5471,13 +5476,8 @@
 		usb {
 
 			vcc5v0-host-en {
-				rockchip,pins = <0x00 0x06 0x00 0x131>;
+				rockchip,pins = <0x00 0x11 0x00 0x131>;
 				phandle = <0x14d>;
-			};
-
-			vcc5v0-otg-en {
-				rockchip,pins = <0x00 0x05 0x00 0x131>;
-				phandle = <0x14e>;
 			};
 		};
 
@@ -5497,11 +5497,16 @@
 			};
 		};
 
-		leds {
+		gpio-leds {
 
-			led-power-en {
-				rockchip,pins = <0x00 0x14 0x00 0x131>;
+			power-led-pin {
+				rockchip,pins = <0x04 0x0b 0x00 0x131>;
 				phandle = <0x159>;
+			};
+
+			status-led-pin {
+				rockchip,pins = <0x04 0x09 0x00 0x131>;
+				phandle = <0x15f>;
 			};
 		};
 
@@ -5627,15 +5632,20 @@
 		};
 	};
 
-	leds {
+	gpio-leds {
 		compatible = "gpio-leds";
+		pinctrl-names = "default";
+		pinctrl-0 = <0x159 0x15f>;
 
-		led-power {
-			label = "led-power";
-			default-state = "on";
-			gpios = <0x34 0x14 0x00>;
-			pinctrl-names = "default";
-			pinctrl-0 = <0x159>;
+		led-0 {
+			label = "red:power";
+			gpios = <0xed 0x0b 0x00>;
+		};
+
+		led-1 {
+			label = "green:status";
+			gpios = <0xed 0x09 0x00>;
+			linux,default-trigger = "heartbeat";
 		};
 	};
 
@@ -5757,24 +5767,11 @@
 		regulator-min-microvolt = <0x4c4b40>;
 		regulator-max-microvolt = <0x4c4b40>;
 		enable-active-high;
-		gpio = <0x34 0x06 0x00>;
+		gpio = <0x34 0x11 0x00>;
 		vin-supply = <0x14c>;
 		pinctrl-names = "default";
 		pinctrl-0 = <0x14d>;
 		phandle = <0x12d>;
-	};
-
-	vcc5v0-otg-regulator {
-		compatible = "regulator-fixed";
-		regulator-name = "vcc5v0_otg";
-		regulator-min-microvolt = <0x4c4b40>;
-		regulator-max-microvolt = <0x4c4b40>;
-		enable-active-high;
-		gpio = <0x34 0x05 0x00>;
-		vin-supply = <0x14c>;
-		pinctrl-names = "default";
-		pinctrl-0 = <0x14e>;
-		phandle = <0x12e>;
 	};
 
 	vcc3v3-lcd0-n {
