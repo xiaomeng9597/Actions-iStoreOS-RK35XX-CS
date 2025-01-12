@@ -63,8 +63,9 @@ rockchip_setup_interfaces()
 			"0:lan" "1:lan" "2:lan" "3:lan" "7t@eth1"
 		;;
 	bendian,bd-one)
+		ucidef_set_interface_wan "eth0"
 		ucidef_add_switch "switch0" \
-			"0:lan:3" "1:lan:2" "2:lan:1" "3:lan:0" "4:wan" "7t@eth0"
+			"0:lan" "1:lan" "2:lan" "3:lan" "7t@eth1"
 		;;
 	cyber,cyber3588-aib)
 		ucidef_set_interfaces_lan_wan "eth0" "eth1"
