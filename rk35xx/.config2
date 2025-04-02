@@ -1,6 +1,0 @@
-# Target Config
-CONFIG_TARGET_rockchip=y
-CONFIG_TARGET_rockchip_armv8=y
-CONFIG_TARGET_MULTI_PROFILE=y
-CONFIG_TARGET_DEVICE_rockchip_armv8_DEVICE_fastrhino_r6xs=y
-CONFIG_TARGET_DEVICE_rockchip_armv8_DEVICE_xunlong_orangepi-5-plus=y
