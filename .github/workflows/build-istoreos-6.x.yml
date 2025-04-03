@@ -1,4 +1,4 @@
-name: Build iStore OS istoreos-6.x
+name: Build iStore OS 6.x
 
 on:
   repository_dispatch:
@@ -17,7 +17,7 @@ env:
   FEEDS_CONF: feeds.conf
   CONFIG_FILE: .config
   DIY_P1_SH: diy-part1.sh
-  DIY_P2_SH: diy-part3.sh
+  DIY_P2_SH: diy-part2.sh
   UPLOAD_BIN_DIR: true
   UPLOAD_FIRMWARE: true
   UPLOAD_RELEASE: true
@@ -34,7 +34,7 @@ jobs:
           - istoreos-24.10
           # - istoreos-23.05
         ARCHITECTURE:
-          - rk35xx
+          - armv8
         os:
           - ubuntu-22.04
 
