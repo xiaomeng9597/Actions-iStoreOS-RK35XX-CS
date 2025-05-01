@@ -22,10 +22,6 @@
 	aliases {
 		mmc0 = &sdhci;
 		mmc1 = &sdmmc;
-		led-boot = &green_led;
-		led-failsafe = &green_led;
-		led-running = &green_led;
-		led-upgrade = &green_led;
 	};
 
 	chosen {
