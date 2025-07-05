@@ -18,8 +18,8 @@ cp -a $GITHUB_WORKSPACE/configfiles/etc/* package/base-files/files/etc/
 
 
 # 集成CPU性能跑分脚本
-echo "CONFIG_PACKAGE_coremark=y" >> .config
-cp -f $GITHUB_WORKSPACE/configfiles/coremark/coremark.sh package/base-files/files/bin/coremark.sh
+cp -a $GITHUB_WORKSPACE/configfiles/coremark/* package/base-files/files/bin/
+chmod 755 package/base-files/files/bin/coremark
 chmod 755 package/base-files/files/bin/coremark.sh
 
 
