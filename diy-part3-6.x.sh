@@ -18,8 +18,8 @@ cp -a $GITHUB_WORKSPACE/configfiles/etc/* package/base-files/files/etc/
 
 
 # 集成CPU性能跑分脚本
-cp -a $GITHUB_WORKSPACE/configfiles/coremark/* package/base-files/files/bin/
-chmod 755 package/base-files/files/bin/coremark
+echo "CONFIG_PACKAGE_coremark=y" >> .config
+cp -f $GITHUB_WORKSPACE/configfiles/coremark/coremark.sh package/base-files/files/bin/coremark.sh
 chmod 755 package/base-files/files/bin/coremark.sh
 
 
@@ -29,5 +29,3 @@ cp -f $GITHUB_WORKSPACE/configfiles/rk3588-orangepi-5-plus.dts target/linux/rock
 
 # 定时限速插件
 git clone --depth=1 https://github.com/sirpdboy/luci-app-eqosplus package/luci-app-eqosplus
-
-git clone --depth=1 https://github.com/kongfl888/luci-app-adguardhome package/luci-app-adguardhome

@@ -15,5 +15,3 @@ echo $date_version > version
 author="xiaomeng9597"
 sed -i "s/DISTRIB_DESCRIPTION.*/DISTRIB_DESCRIPTION='%D %V ${date_version} by ${author}'/g" package/base-files/files/etc/openwrt_release
 sed -i "s/OPENWRT_RELEASE.*/OPENWRT_RELEASE=\"%D %V ${date_version} by ${author}\"/g" package/base-files/files/usr/lib/os-release
-
-echo 'src-git openclash https://github.com/vernesong/OpenClash.git' >> feeds.conf.default
