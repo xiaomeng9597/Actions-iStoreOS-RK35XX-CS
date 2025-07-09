@@ -23,7 +23,7 @@ chmod 755 package/base-files/files/bin/coremark
 chmod 755 package/base-files/files/bin/coremark.sh
 
 
-# 复制Orange pi 5 Plus dts设备树文件到指定目录下
+# 复制 Orange pi 5 Plus dts设备树文件到指定目录下
 cp -f $GITHUB_WORKSPACE/configfiles/dts/rk3588-orangepi-5-plus.dts target/linux/rockchip/dts/rk3588/rk3588-orangepi-5-plus.dts
 
 
