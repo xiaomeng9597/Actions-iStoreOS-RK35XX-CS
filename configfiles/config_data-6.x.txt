@@ -1,5 +1,6 @@
 CONFIG_TARGET_DEVICE_rockchip_armv8_DEVICE_xunlong_orangepi-5-plus=y
 
+CONFIG_PACKAGE_lm-sensors=y
 CONFIG_PACKAGE_lm-sensors-detect=y
 CONFIG_PACKAGE_kmod-mac80211=y
 CONFIG_PACKAGE_hd-idle=y
